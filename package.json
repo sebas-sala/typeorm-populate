@@ -1,14 +1,22 @@
 {
-  "name": "typeorm-populate",
-  "version": "0.1.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": {
-    "name": "sebastiansala",
-    "url": "https://github.com/sebas-sala"
-  },
-  "license": "MIT",
-  "description": "A simple TypeORM seeder to populate your database."
+	"name": "typeorm-populate",
+	"version": "0.1.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "npx @biomejs/biome lint --write",
+		"format": "npx @biomejs/biome format --write"
+	},
+	"author": {
+		"name": "sebastiansala",
+		"url": "https://github.com/sebas-sala"
+	},
+	"license": "MIT",
+	"description": "A simple TypeORM seeder to populate your database.",
+	"dependencies": {
+		"typeorm": "^0.3.20"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.3"
+	}
 }
