@@ -23,11 +23,11 @@ export class TypeormPopulate {
 		}
 	}
 
-	async initialize() {
+	async initialize(): Promise<void> {
 		await this.dataSource.initialize();
 	}
 
-	async destroy() {
+	async destroy(): Promise<void> {
 		await this.dataSource.destroy();
 	}
 }
