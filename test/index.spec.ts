@@ -24,14 +24,24 @@ describe("TypeormPopulate", () => {
 
 	it("should initialize the data source", async () => {
 		await typeormPopulate.initialize();
+
 		expect(dataSource.isInitialized).toBe(true);
 	});
 
 	it("should destroy the data source", async () => {
 		await typeormPopulate.initialize();
 		await typeormPopulate.destroy();
+
+		expect(dataSource.isInitialized).toBe(false);
+		await typeormPopulate.initialize();
+	});
+
+	it("should reinitialize the data source after destruction", async () => {
+		await typeormPopulate.initialize();
+		await typeormPopulate.destroy();
 		expect(dataSource.isInitialized).toBe(false);
 
 		await typeormPopulate.initialize();
+		expect(dataSource.isInitialized).toBe(true);
 	});
 });
