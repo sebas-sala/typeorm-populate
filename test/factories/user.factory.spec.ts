@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 
 import { DataSource } from "typeorm";
-import { User } from "@/test/entities/user.entity";
-import { UserFactory } from "@/test/factories/user.factory";
+import { User } from "../entities/user.entity";
+import { UserFactory } from "../factories/user.factory";
 
 describe("UserFactory", () => {
 	let dataSource: DataSource;

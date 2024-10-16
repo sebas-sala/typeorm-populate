@@ -1,7 +1,7 @@
 import type { DataSource } from "typeorm";
 
-import { Factory } from "@/src/factory";
-import { User } from "@/test/entities/user.entity";
+import { Factory } from "../../src/factory";
+import { User } from "../entities/user.entity";
 
 export class UserFactory extends Factory<User> {
 	constructor(dataSource: DataSource) {

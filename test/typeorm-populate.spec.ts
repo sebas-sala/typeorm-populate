@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 
-import { factories } from "@/samples/database/factories";
+import { factories } from "../examples/database/factories";
 import { TypeormPopulate } from "../src/typeorm-populate";
 
 import { User } from "./entities/user.entity";

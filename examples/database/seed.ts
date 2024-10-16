@@ -1,12 +1,12 @@
 import { DataSource } from "typeorm";
 
 import { factories } from "./factories";
-import { TypeormPopulate } from "@/src/typeorm-populate";
+import { TypeormPopulate } from "../../src/typeorm-populate";
 
-import { Post } from "@/test/entities/post.entity";
-import { User } from "@/test/entities/user.entity";
+import { Post } from "../../test/entities/post.entity";
+import { User } from "../../test/entities/user.entity";
 
-import { UserFactory } from "@/test/factories/user.factory";
+import { UserFactory } from "../../test/factories/user.factory";
 
 (async () => {
 	/**
@@ -34,7 +34,7 @@ import { UserFactory } from "@/test/factories/user.factory";
 	 */
 	const populator = new TypeormPopulate({
 		dataSource,
-		factories: factories,
+		factories,
 	});
 
 	try {

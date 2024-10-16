@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import type { DataSource } from "typeorm";
 
-import { Factory } from "@/src/factory";
+import { Factory } from "../../src/factory";
 import { Post } from "../entities/post.entity";
 
 export class PostFactory extends Factory<Post> {
