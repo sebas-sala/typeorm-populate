@@ -26,9 +26,11 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.3",
+		"@faker-js/faker": "^9.0.3",
 		"@types/bun": "latest",
 		"jest": "^29.7.0"
 	},
+	"files": ["dist/", "src/", "README.md", "LICENSE"],
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	}
