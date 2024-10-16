@@ -24,7 +24,6 @@
 	"description": "A simple TypeORM seeder to populate your database.",
 	"dependencies": {
 		"reflect-metadata": "^0.2.2",
-		"sqlite3": "^5.1.7",
 		"typeorm": "^0.3.20"
 	},
 	"main": "dist/src/index.js",
@@ -33,15 +32,9 @@
 		"@biomejs/biome": "1.9.3",
 		"@faker-js/faker": "^9.0.3",
 		"@types/bun": "latest",
-		"jest": "^29.7.0"
+		"sqlite3": "^5.1.7"
 	},
-	"files": [
-		"dist/",
-		"src/",
-		"README.md",
-		"LICENSE",
-		"scripts/"
-	],
+	"files": ["dist/", "src/", "README.md", "LICENSE", "scripts/"],
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	}
