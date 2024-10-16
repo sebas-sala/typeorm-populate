@@ -7,15 +7,24 @@ export abstract class Factory<Entity extends ObjectLiteral> {
 		this.repository = dataSource.getRepository(entity);
 	}
 
-	async createOne(data?: unknown): Promise<Entity> {
-		const entity = this.repository.create(data as Entity);
+	protected defaultData(): Partial<Entity> {
+		return {};
+	}
+
+	async createOne(data?: Partial<Entity>): Promise<Entity> {
+		const entityData = {
+			...this.defaultData(),
+			...data,
+		} as Entity;
+
+		const entity = this.repository.create(entityData);
 		return this.repository.save(entity);
 	}
 
-	async createMany(count: number): Promise<Entity[]> {
+	async createMany(count: number, data?: Partial<Entity>): Promise<Entity[]> {
 		const entities = [] as Entity[];
 		for (let i = 0; i < count; i++) {
-			const entity = await this.createOne();
+			const entity = await this.createOne(data);
 			entities.push(entity);
 		}
 		return entities;
