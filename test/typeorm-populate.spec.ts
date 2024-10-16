@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { afterEach, beforeEach, describe, expect, it } from "bun:test";
 
-import { factories } from "./factories";
+import { factories } from "@/samples/database/factories";
 import { TypeormPopulate } from "../src/typeorm-populate";
 
 import { User } from "./entities/user.entity";
@@ -96,12 +96,12 @@ describe("TypeormPopulate", () => {
 		});
 	});
 
-	describe("seedAll", () => {
+	describe("seedMany", () => {
 		it("should seed the database with multiple factories", async () => {
 			await typeormPopulate.initialize();
-			await typeormPopulate.seedAll([
-				{ name: "user", amount: 5 },
-				{ name: "post", amount: 10 },
+			await typeormPopulate.seedMany([
+				{ entity: "user", amount: 5 },
+				{ entity: "post", amount: 10 },
 			]);
 
 			const users = await dataSource.getRepository(User).find();
@@ -115,11 +115,24 @@ describe("TypeormPopulate", () => {
 			await typeormPopulate.initialize();
 
 			await expect(
-				typeormPopulate.seedAll([
-					{ name: "user", amount: 5 },
-					{ name: "nonExistent", amount: 10 },
+				typeormPopulate.seedMany([
+					{ entity: "user", amount: 5 },
+					{ entity: "nonExistent", amount: 10 },
 				]),
 			).rejects.toThrow("Factory nonExistent not found");
+		});
+	});
+
+	describe("seedAll", () => {
+		it("should seed the database with all factories", async () => {
+			await typeormPopulate.initialize();
+			await typeormPopulate.seedAll(5);
+
+			const users = await dataSource.getRepository(User).find();
+			const posts = await dataSource.getRepository(Post).find();
+
+			expect(users).toHaveLength(5);
+			expect(posts).toHaveLength(5);
 		});
 	});
 });

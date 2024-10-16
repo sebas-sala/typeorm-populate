@@ -40,12 +40,20 @@ export class TypeormPopulate {
 		return list;
 	}
 
-	async seedAll(
-		factoryData: { name: string; amount: number }[],
+	async seedMany(
+		factoryData: { entity: string; amount: number }[],
 	): Promise<void> {
-		for (const { name, amount } of factoryData) {
-			await this.seed(name, amount);
+		for (const { entity, amount } of factoryData) {
+			await this.seed(entity, amount);
 		}
+	}
+
+	async seedAll(count: number): Promise<void> {
+		const promises = Object.keys(this.factories).map((name) =>
+			this.seed(name, count),
+		);
+
+		await Promise.all(promises);
 	}
 
 	isInitialized(): boolean {
