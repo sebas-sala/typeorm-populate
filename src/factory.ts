@@ -21,9 +21,13 @@ export abstract class Factory<Entity extends ObjectLiteral> {
 		return this.repository.save(entity);
 	}
 
-	async createMany(count: number, data?: Partial<Entity>): Promise<Entity[]> {
+	async createMany(
+		count: number,
+		dataArray?: Partial<Entity>[],
+	): Promise<Entity[]> {
 		const entities = [] as Entity[];
 		for (let i = 0; i < count; i++) {
+			const data = dataArray?.[i];
 			const entity = await this.createOne(data);
 			entities.push(entity);
 		}
