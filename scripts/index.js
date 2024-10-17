@@ -22,8 +22,8 @@ async function main() {
       cli();
       break;
     default:
-      console.log("Unknown command:", subcommand);
-      console.log("Usage: npx typeorm-populate <command>");
+      cli();
+      break;
   }
 }
 

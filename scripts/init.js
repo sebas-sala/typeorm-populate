@@ -6,11 +6,8 @@ const inquirer = require("inquirer");
 
 const projectRoot = process.cwd();
 
-const factoriesContent = "export const factories = { };";
-
 const seedContent = `
 import { DataSource } from "typeorm";
-import { factories } from "./factories";
 import { TypeormPopulate } from "typeorm-populate";
 
 (async () => {
@@ -23,7 +20,7 @@ import { TypeormPopulate } from "typeorm-populate";
 
 	const populator = new TypeormPopulate({
 		dataSource,
-		factories,
+		factories: {},
 	});
 
 	try {
@@ -59,14 +56,7 @@ async function main() {
     } else {
       if (!fs.existsSync(srcDbDir)) {
         fs.mkdirSync(srcDbDir, { recursive: true });
-        console.log(`Created directory: ${srcDbDir}`);
       }
-
-      fs.writeFileSync(
-        path.join(srcDbDir, "factories.ts"),
-        factoriesContent.trim()
-      );
-      console.log(`File ${path.join(directory, "factories.ts")} created.`);
 
       fs.writeFileSync(path.join(srcDbDir, "seed.ts"), seedContent.trim());
       console.log(`File ${path.join(directory, "seed.ts")} created.`);
