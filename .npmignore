@@ -1,3 +1,6 @@
 /test
 *.spec.ts
 node_modules/
+tests/
+*.ts
+*.test.ts

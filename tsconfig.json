@@ -9,7 +9,6 @@
     "sourceMap": false,
     "outDir": "./dist",
     "baseUrl": "./",
-    "noEmit": true,
     "esModuleInterop": true,                          
     "moduleResolution": "node",
     "skipLibCheck": true,                                
@@ -18,5 +17,5 @@
     "strict": true,
     "allowJs": true
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "test", "**/*.spec.ts"]
 }
