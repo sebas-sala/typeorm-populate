@@ -1,6 +1,6 @@
 {
 	"name": "typeorm-populate",
-	"version": "0.1.6-0",
+	"version": "0.1.5",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "npx @biomejs/biome lint --write",
@@ -8,7 +8,7 @@
 		"format": "npx @biomejs/biome format --write"
 	},
 	"bin": {
-		"typeorm-populate": "scripts/typeorm-populate-setup.js"
+		"typeorm-populate": "scripts/index.js"
 	},
 	"author": {
 		"name": "sebastiansala",
@@ -23,8 +23,11 @@
 	"license": "MIT",
 	"description": "A simple TypeORM seeder to populate your database.",
 	"dependencies": {
+		"inquirer": "^12.0.0",
 		"reflect-metadata": "^0.2.2",
-		"typeorm": "^0.3.20"
+		"ts-node": "^10.9.2",
+		"typeorm": "^0.3.20",
+		"typeorm-populate": "^0.1.6-0"
 	},
 	"main": "dist/src/index.js",
 	"types": "dist/src/index.d.ts",
@@ -34,13 +37,7 @@
 		"@types/bun": "latest",
 		"sqlite3": "^5.1.7"
 	},
-	"files": [
-		"dist/",
-		"src/",
-		"README.md",
-		"LICENSE",
-		"scripts/"
-	],
+	"files": ["dist/", "src/", "README.md", "LICENSE", "scripts/"],
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	}
