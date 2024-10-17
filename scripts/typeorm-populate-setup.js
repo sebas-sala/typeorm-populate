@@ -6,6 +6,20 @@ const path = require("node:path");
 const projectRoot = process.cwd();
 const srcDbDir = path.join(projectRoot, "src/database");
 
+const args = process.argv.slice(2);
+console.log(process.argv);
+
+if (args[0] === "seed") {
+  // Lógica para el comando "seed"
+  console.log("Running the seed script...");
+
+  // Aquí puedes colocar la lógica específica para el seed
+  // Tu código de la semilla
+} else {
+  console.log("Unknown command:", args[0]);
+  console.log("Usage: npx typeorm-populate seed");
+}
+
 const factoriesContent = "export const factories = { };";
 
 const seedContent = `
