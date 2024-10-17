@@ -30,23 +30,17 @@ npm install -D typeorm-populate
 npx typeorm-populate
 ```
 
-## Run tests
-
-```sh
-npm run test
-```
-
 ## Author
 
 👤 **sebastiansala**
 
 - Website: Sebastian Sala
 - Github: [@sebas-sala](https://github.com/sebas-sala)
-- LinkedIn: [@sebastian-sala](https://linkedin.com/in/sebastian-sala)
+- LinkedIn: [@Sebastian Sala](https://www.linkedin.com/in/sebastian-sala-91b5b8292/)
 
-## 🤝 Contributing
+<!-- ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sebas-sala/typeorm-populate/issues). You can also take a look at the [contributing guide](https://github.com/sebas-sala/typeorm-populate/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sebas-sala/typeorm-populate/issues). You can also take a look at the [contributing guide](https://github.com/sebas-sala/typeorm-populate/blob/master/CONTRIBUTING.md). -->
 
 ## Show your support
 
@@ -58,5 +52,3 @@ Copyright © 2024 [sebastiansala](https://github.com/sebas-sala).<br />
 This project is [MIT](https://github.com/sebas-sala/typeorm-populate/blob/master/LICENSE) licensed.
 
 ---
-
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
