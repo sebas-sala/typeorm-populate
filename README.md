@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to typeorm-populate 👋</h1>
+<h1 align="center">Typeorm populate</h1>
 <p>
   <a href="https://www.npmjs.com/package/typeorm-populate" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/typeorm-populate.svg">
@@ -32,19 +32,12 @@ npx typeorm-populate
 
 ## Author
 
-👤 **sebastiansala**
-
-- Website: Sebastian Sala
 - Github: [@sebas-sala](https://github.com/sebas-sala)
 - LinkedIn: [@Sebastian Sala](https://www.linkedin.com/in/sebastian-sala-91b5b8292/)
 
 <!-- ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sebas-sala/typeorm-populate/issues). You can also take a look at the [contributing guide](https://github.com/sebas-sala/typeorm-populate/blob/master/CONTRIBUTING.md). -->
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
