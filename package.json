@@ -26,8 +26,7 @@
 		"inquirer": "^12.0.0",
 		"reflect-metadata": "^0.2.2",
 		"ts-node": "^10.9.2",
-		"typeorm": "^0.3.20",
-		"typeorm-populate": "^0.1.6-0"
+		"typeorm": "^0.3.20"
 	},
 	"main": "dist/src/index.js",
 	"types": "dist/src/index.d.ts",
