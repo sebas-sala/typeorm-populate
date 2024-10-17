@@ -21,6 +21,16 @@ async function promptForFactoryName() {
         return "Invalid input. Please enter a name with only alphabets, no spaces or special characters.";
       }
 
+      const srcDbDir = path.resolve(projectRoot, "src/factories");
+      const factoryFilePath = path.join(
+        srcDbDir,
+        `${formattedInput}.factory.ts`
+      );
+
+      if (fs.existsSync(factoryFilePath)) {
+        return `The file ${factoryFilePath} already exists.`;
+      }
+
       return true;
     },
   });
@@ -31,12 +41,12 @@ async function promptForPath() {
     type: "input",
     name: "directory",
     message:
-      "Where do you want to create the `database` folder? (default: src/database)",
-    default: "src/database",
+      "Where do you want to create the `factories` folder? (default: src/factories)",
+    default: "src/factories",
   });
 }
 
-function fileContent(factoryName) {
+function factoryFileContent(factoryName) {
   return `
 import {Factory} from "typeorm-populate"; 
 import type { DataSource, ObjectLiteral } from "typeorm";
@@ -62,22 +72,50 @@ async function main() {
 
   const srcDbDir = path.resolve(projectRoot, directory);
   const factoryFilePath = path.join(srcDbDir, `${factoryInput}.factory.ts`);
+  const factoriesFilePath = path.join(srcDbDir, "/index.ts");
 
-  if (fs.existsSync(factoryFilePath)) {
-    console.log(`The file ${factoryFilePath} already exists.`);
-    return;
-  }
+  const changes = [];
 
   if (!fs.existsSync(srcDbDir)) {
-    fs.mkdirSync(srcDbDir, { recursive: true });
-    console.log(`Created directory: ${srcDbDir}`);
+    changes.push(() => fs.mkdirSync(srcDbDir, { recursive: true }));
   }
 
   const factoryName = `${factoryInput[0].toUpperCase()}${factoryInput.slice(
     1
   )}Factory`;
 
-  fs.writeFileSync(factoryFilePath, fileContent(factoryName).trim());
+  const factoryContent = factoryFileContent(factoryName).trim();
+  changes.push(() => fs.writeFileSync(factoryFilePath, factoryContent));
+
+  if (fs.existsSync(factoriesFilePath)) {
+    let factoriesContent = fs.readFileSync(factoriesFilePath, "utf-8");
+
+    const importStatement = `import { ${factoryName} } from "./${factoryInput}.factory";\n`;
+    factoriesContent = importStatement + factoriesContent;
+
+    factoriesContent = factoriesContent.replace(
+      /export const factories = \{([^}]*)\}/,
+      (match, factories) => {
+        const updatedFactories = factories.trim()
+          ? `${factories.trim()}, ${factoryName}`
+          : factoryName;
+        return `export const factories = { ${updatedFactories} };`;
+      }
+    );
+
+    changes.push(() => fs.writeFileSync(factoriesFilePath, factoriesContent));
+  } else {
+    const initialFactoriesContent = `import { ${factoryName} } from "./${factoryInput}.factory";\n\nexport const factories = { ${factoryName} };`;
+    changes.push(() =>
+      fs.writeFileSync(factoriesFilePath, initialFactoriesContent)
+    );
+  }
+
+  for (const change of changes) {
+    change();
+  }
+
+  console.log(`Factory ${factoryInput} created successfully.`);
 }
 
 module.exports = main;
