@@ -2,6 +2,8 @@
 
 const seed = require("./seed");
 const init = require("./init");
+const factory = require("./factory");
+const cli = require("./cli");
 
 const [, , subcommand] = process.argv;
 
@@ -13,8 +15,11 @@ async function main() {
     case "init":
       init();
       break;
+    case "factory":
+      factory();
+      break;
     case "cli":
-      console.log("Running the CLI script...");
+      cli();
       break;
     default:
       console.log("Unknown command:", subcommand);
