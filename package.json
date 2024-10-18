@@ -1,6 +1,6 @@
 {
 	"name": "typeorm-populate",
-	"version": "0.1.8",
+	"version": "0.2.0",
 	"scripts": {
 		"test": "bun test",
 		"lint": "npx @biomejs/biome lint --write",
@@ -37,7 +37,13 @@
 		"sqlite3": "^5.1.7",
 		"tsx": "^4.19.1"
 	},
-	"files": ["dist/", "src/", "README.md", "LICENSE", "scripts/"],
+	"files": [
+		"dist/",
+		"src/",
+		"README.md",
+		"LICENSE",
+		"scripts/"
+	],
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	}
