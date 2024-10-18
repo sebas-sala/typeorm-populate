@@ -36,8 +36,3 @@ async function main() {
 }
 
 export { main as seed };
-
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});

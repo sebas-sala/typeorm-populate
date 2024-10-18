@@ -9,7 +9,7 @@
 	},
 	"type": "module",
 	"bin": {
-		"typeorm-populate": "scripts/index.js"
+		"typeorm-populate": "scripts/index.mjs"
 	},
 	"author": {
 		"name": "sebastiansala",

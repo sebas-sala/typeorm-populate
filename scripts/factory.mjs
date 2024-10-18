@@ -1,7 +1,9 @@
+#!/usr/bin/env node
+
 import inquirer from "inquirer";
 import fs from "node:fs";
 import path from "node:path";
-import { isValidInput } from "../src/utils/formatters";
+import { isValidInput } from "../src/utils/formatters.js";
 
 const projectRoot = process.cwd();
 
