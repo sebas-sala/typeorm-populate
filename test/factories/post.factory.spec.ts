@@ -1,9 +1,10 @@
-import { afterAll, beforeAll, describe, expect, it } from "bun:test";
+import { afterAll, beforeAll, describe, expect, it, spyOn } from "bun:test";
 
 import { DataSource } from "typeorm";
 
 import { Post } from "../entities/post.entity";
 import { PostFactory } from "./post.factory";
+import { User } from "../entities/user.entity";
 
 describe("PostFactory", () => {
 	let dataSource: DataSource;
@@ -14,7 +15,7 @@ describe("PostFactory", () => {
 			type: "sqlite",
 			database: ":memory:",
 			synchronize: true,
-			entities: [Post],
+			entities: [Post, User],
 		});
 		await dataSource.initialize();
 
@@ -22,7 +23,9 @@ describe("PostFactory", () => {
 	});
 
 	afterAll(async () => {
-		await dataSource.destroy();
+		if (dataSource.isInitialized) {
+			await dataSource.destroy();
+		}
 	});
 
 	describe("createOne", () => {
@@ -34,6 +37,11 @@ describe("PostFactory", () => {
 		});
 
 		it("should create one post with data", async () => {
+			const logSpy = spyOn(
+				postFactory as unknown as { logPost: () => void },
+				"logPost",
+			);
+
 			const post = await postFactory.createOne({
 				title: "Test Post",
 				content: "This is a test post.",
@@ -42,6 +50,7 @@ describe("PostFactory", () => {
 			expect(post.id).toBeDefined();
 			expect(post.title).toBe("Test Post");
 			expect(post.content).toBe("This is a test post.");
+			expect(logSpy).toHaveBeenCalled();
 		});
 	});
 

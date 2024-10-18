@@ -1,6 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it } from "bun:test";
+import { afterAll, beforeAll, describe, expect, it, spyOn } from "bun:test";
 
 import { DataSource } from "typeorm";
+import { Post } from "../entities/post.entity";
 import { User } from "../entities/user.entity";
 import { UserFactory } from "../factories/user.factory";
 
@@ -9,11 +10,13 @@ describe("UserFactory", () => {
 	let userFactory: UserFactory;
 
 	beforeAll(async () => {
+		await Promise.resolve();
+
 		dataSource = new DataSource({
 			type: "sqlite",
 			database: ":memory:",
 			synchronize: true,
-			entities: [User],
+			entities: [User, Post],
 		});
 		await dataSource.initialize();
 
@@ -24,25 +27,35 @@ describe("UserFactory", () => {
 		await dataSource.destroy();
 	});
 
-	it("should create one user", async () => {
-		const user = await userFactory.createOne({
-			firstName: "John",
-			lastName: "Doe",
-			email: "test@test.com",
-		});
+	describe("createOne", () => {
+		it("should create one user", async () => {
+			const uppercaseSpy = spyOn(
+				userFactory as unknown as { uppercaseNames: () => void },
+				"uppercaseNames",
+			);
 
-		expect(user.id).toBeDefined();
-		expect(user).toBeInstanceOf(User);
-	});
+			const user = await userFactory.createOne({
+				firstName: "John",
+				lastName: "Doe",
+				email: "test@test.com",
+			});
 
-	it("should create many users", async () => {
-		const users = await userFactory.createMany(5);
-
-		expect(users).toHaveLength(5);
-
-		for (const user of users) {
 			expect(user.id).toBeDefined();
 			expect(user).toBeInstanceOf(User);
-		}
+			expect(uppercaseSpy).toHaveBeenCalled();
+		});
+	});
+
+	describe("createMany", () => {
+		it("should create many users", async () => {
+			const users = await userFactory.createMany(5);
+
+			expect(users).toHaveLength(5);
+
+			for (const user of users) {
+				expect(user.id).toBeDefined();
+				expect(user).toBeInstanceOf(User);
+			}
+		});
 	});
 });
