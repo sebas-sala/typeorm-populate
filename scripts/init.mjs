@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const fs = require("node:fs");
-const path = require("node:path");
-const inquirer = require("inquirer");
+import fs from "node:fs";
+import path from "node:path";
+import inquirer from "inquirer";
 
 const projectRoot = process.cwd();
 
@@ -66,4 +66,6 @@ async function main() {
   }
 }
 
-module.exports = main;
+main();
+
+export { main as init };

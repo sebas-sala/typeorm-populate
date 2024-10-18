@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const seed = require("./seed");
-const init = require("./init");
-const factory = require("./factory");
-const cli = require("./cli");
+import { factory } from "./factory.mjs";
+import { seed } from "./seed.mjs";
+import { init } from "./init.mjs";
+import { cli } from "./cli.mjs";
 
 const [, , subcommand] = process.argv;
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-const fs = require("node:fs");
-const path = require("node:path");
-const inquirer = require("inquirer");
-const { exec } = require("node:child_process");
+import { exec } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
+import inquirer from "inquirer";
 
 async function promptForSeedFile() {
   const { seedFile } = await inquirer.createPromptModule()({
@@ -20,20 +20,24 @@ async function main() {
   const seedFilePath = await promptForSeedFile();
 
   if (fs.existsSync(seedFilePath)) {
-    exec(`npx ts-node ${seedFilePath}`, (error, stdout, stderr) => {
+    console.log("Seeding the database...");
+    exec(`npx tsx ${seedFilePath}`, (error) => {
       if (error) {
         console.error(`Error executing seed file: ${error.message}`);
         return;
       }
-      if (stderr) {
-        console.error(`stderr: ${stderr}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
+
+      console.log("Database seeded successfully.");
     });
   } else {
     console.log(`Seed file not found at ${seedFilePath}`);
+    return;
   }
 }
 
-module.exports = main;
+export { main as seed };
+
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

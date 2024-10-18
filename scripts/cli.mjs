@@ -1,7 +1,7 @@
-const inquirer = require("inquirer");
-const seed = require("./seed");
-const init = require("./init");
-const factory = require("./factory");
+import inquirer from "inquirer";
+import { factory } from "./factory.mjs";
+import { init } from "./init.mjs";
+import { seed } from "./seed.mjs";
 
 async function promptAction() {
   return inquirer.createPromptModule()({

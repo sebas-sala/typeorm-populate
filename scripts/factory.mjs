@@ -1,8 +1,9 @@
-const inquirer = require("inquirer");
-const fs = require("node:fs");
-const path = require("node:path");
+import inquirer from "inquirer";
+import fs from "node:fs";
+import path from "node:path";
+import { isValidInput } from "../src/utils/formatters";
+
 const projectRoot = process.cwd();
-const { isValidInput } = require("../src/utils/formatters");
 
 async function promptForFactoryName() {
   return inquirer.createPromptModule()({
@@ -118,4 +119,4 @@ async function main() {
   console.log(`Factory ${factoryInput} created successfully.`);
 }
 
-module.exports = main;
+export { main as factory };
