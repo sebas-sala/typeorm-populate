@@ -1,33 +1,31 @@
 import {
-	Column,
-	CreateDateColumn,
-	Entity,
-	ManyToOne,
-	PrimaryGeneratedColumn,
-	UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
-import { User } from "./user.entity";
+import type { User } from "./user.entity";
 
 @Entity()
 export class Post {
-	@PrimaryGeneratedColumn("uuid")
-	id!: string;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-	@Column()
-	title!: string;
+  @Column()
+  title!: string;
 
-	@Column()
-	content!: string;
+  @Column()
+  content!: string;
 
-	@CreateDateColumn()
-	createdAt!: Date;
+  @CreateDateColumn()
+  createdAt!: Date;
 
-	@UpdateDateColumn()
-	updatedAt!: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
-	// @ManyToOne(
-	// 	() => User,
-	// 	(user) => user.posts,
-	// )
-	// user!: User;
+  // This resolves circular dependency
+  @ManyToOne("User", "posts")
+  user?: User;
 }
