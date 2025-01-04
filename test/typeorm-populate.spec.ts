@@ -6,17 +6,11 @@ import { TypeormPopulate } from "../src/typeorm-populate";
 import { User } from "./entities/user.entity";
 import { Post } from "./entities/post.entity";
 import { PostFactory, UserFactory } from "./factories";
-import { Factory } from "src";
-
-type Entities = {
-  User: User;
-  Post: Post;
-};
 
 describe("TypeormPopulate", () => {
   let dataSource: DataSource;
 
-  let typeormPopulate: TypeormPopulate<Entities>;
+  let typeormPopulate: TypeormPopulate;
 
   beforeEach(async () => {
     dataSource = new DataSource({
@@ -26,12 +20,9 @@ describe("TypeormPopulate", () => {
       entities: [User, Post],
     });
 
-    typeormPopulate = new TypeormPopulate<Entities>({
+    typeormPopulate = new TypeormPopulate({
       dataSource,
-      factories: {
-        User: new UserFactory(dataSource),
-        Post: new PostFactory(dataSource),
-      },
+      factories: [new UserFactory(dataSource), new PostFactory(dataSource)],
     });
   });
 
