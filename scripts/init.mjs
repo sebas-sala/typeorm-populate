@@ -20,7 +20,7 @@ import { TypeormPopulate } from "typeorm-populate";
 
 	const populator = new TypeormPopulate({
 		dataSource,
-		factories: {},
+		factories: [],
 	});
 
 	try {
