@@ -26,10 +26,18 @@ export abstract class Factory<Entity extends ObjectLiteral> {
   }
 
   async initialize() {
-    this.relations = this.repository.metadata.relations;
+    if (!this.relations || !this.relations.length) {
+      this.relations = this.repository.metadata.relations;
+    }
   }
 
-  async createOne(data?: Partial<Entity>): Promise<Entity> {
+  async createOne({
+    data,
+  }: {
+    data?: Partial<Entity>;
+  } = {}): Promise<Entity> {
+    this.initialize();
+
     const entityData = {
       ...this.defaultData(),
       ...data,
@@ -51,12 +59,16 @@ export abstract class Factory<Entity extends ObjectLiteral> {
 
   async createMany(
     count: number,
-    dataArray?: Partial<Entity>[]
+    {
+      data,
+    }: {
+      data?: Partial<Entity>[];
+    } = {}
   ): Promise<Entity[]> {
     const entities = [] as Entity[];
     for (let i = 0; i < count; i++) {
-      const data = dataArray?.[i];
-      const entity = await this.createOne(data);
+      const itemData = data?.[i];
+      const entity = await this.createOne({ data: itemData });
       entities.push(entity);
     }
     return entities;
