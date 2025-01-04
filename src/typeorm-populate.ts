@@ -1,20 +1,18 @@
 import type { DataSource, ObjectLiteral } from "typeorm";
 import type { Factory } from "./factory";
 
-export type Factories<T extends Record<string, ObjectLiteral>> = {
-  [K in keyof T]: Factory<T[K]>;
-};
+export type Factories = Factory<any>[];
 
-export interface Config<T extends Record<string, ObjectLiteral>> {
+export interface Config {
   dataSource: DataSource;
-  factories: Factories<T>;
+  factories: Factories;
 }
 
-export class TypeormPopulate<T extends Record<string, ObjectLiteral>> {
+export class TypeormPopulate {
   private dataSource: DataSource;
-  private factories: Factories<T>;
+  private factories: Factories;
 
-  constructor(config: Config<T>) {
+  constructor(config: Config) {
     this.dataSource = config.dataSource;
     this.factories = config.factories;
   }
@@ -27,14 +25,18 @@ export class TypeormPopulate<T extends Record<string, ObjectLiteral>> {
       relationsAmount?: number;
     }
   ): Promise<ObjectLiteral[]> {
-    const factory = this.factories[factoryName];
+    const factory = this.factories.find(
+      (f) =>
+        typeof f.repository.target === "function" &&
+        f.repository.target.name === factoryName
+    );
 
     if (!factory) {
       throw new Error(`Factory ${factoryName} not found`);
     }
 
     const factoryRelations = factory.relations;
-    const list = [] as ObjectLiteral[];
+    const list: ObjectLiteral[] = [];
 
     await this.dataSource.transaction(async (manager) => {
       const entities = await factory.createMany(amount);
@@ -44,33 +46,27 @@ export class TypeormPopulate<T extends Record<string, ObjectLiteral>> {
         return list;
       }
 
+      const relationAmount = options.relationsAmount || amount;
+
       for (const relation of factoryRelations) {
         if (typeof relation.target !== "function") continue;
 
-        const relationFactory = this.factories[relation.type as string];
+        const relationFactory = this.factories.find(
+          (f) => f.repository.target === relation.target
+        );
         if (!relationFactory) continue;
 
-        const relationAmount = options.relationsAmount || amount;
-
-        for (let i = 0; i < amount; i++) {
-          const entity = entities[i];
-
+        for (const entity of entities) {
           const relatedEntities = await relationFactory.createMany(
             relationAmount
           );
 
-          if (relation.isOneToMany) {
-            (entity as Record<string, unknown>)[relation.propertyName] =
-              relatedEntities;
-          } else {
-            (entity as Record<string, unknown>)[relation.propertyName] =
-              relatedEntities[0];
-          }
+          (entity as Record<string, unknown>)[relation.propertyName] =
+            relation.isOneToMany ? relatedEntities : relatedEntities[0];
         }
-
-        await manager.save(entities);
       }
 
+      await manager.save(entities);
       list.push(...entities);
     });
 
@@ -86,9 +82,12 @@ export class TypeormPopulate<T extends Record<string, ObjectLiteral>> {
   }
 
   async seedAll(count: number): Promise<void> {
-    const promises = Object.keys(this.factories).map((name) =>
-      this.seed(name, count)
-    );
+    const promises = this.factories.map((factory) => {
+      const factoryTarget = factory.repository.target;
+      if (typeof factoryTarget !== "function") return;
+
+      return this.seed(factoryTarget.name, count);
+    });
 
     await Promise.all(promises);
   }
