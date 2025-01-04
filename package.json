@@ -1,6 +1,6 @@
 {
 	"name": "typeorm-populate",
-	"version": "0.2.1",
+	"version": "0.3.0",
 	"scripts": {
 		"test": "bun test",
 		"lint": "npx @biomejs/biome lint --write",
